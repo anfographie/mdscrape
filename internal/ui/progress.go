@@ -341,20 +341,23 @@ func (m *Model) renderFinalStats() string {
 	elapsed := time.Since(m.stats.StartTime).Round(time.Second)
 
 	b.WriteString("\n")
-	b.WriteString(titleStyle.Render("Scraping Summary"))
+	b.WriteString(successStyle.Render("✓ Scraping complete!"))
 	b.WriteString("\n\n")
 
-	b.WriteString(fmt.Sprintf("  Total files:   %d\n", m.stats.TotalDownloaded))
-	b.WriteString(fmt.Sprintf("  Total size:    %s\n", formatBytes(m.stats.TotalBytes)))
-	b.WriteString(fmt.Sprintf("  Errors:        %d\n", m.stats.TotalErrors))
-	b.WriteString(fmt.Sprintf("  Duration:      %s\n", elapsed))
-	b.WriteString(fmt.Sprintf("  Output:        %s\n", m.config.OutputDir))
+	b.WriteString(fmt.Sprintf("  %s  %s\n", infoStyle.Render("Files:"), statsStyle.Render(fmt.Sprintf("%d", m.stats.TotalDownloaded))))
+	b.WriteString(fmt.Sprintf("  %s   %s\n", infoStyle.Render("Size:"), statsStyle.Render(formatBytes(m.stats.TotalBytes))))
+	b.WriteString(fmt.Sprintf("  %s   %s\n", infoStyle.Render("Time:"), statsStyle.Render(elapsed.String())))
+
+	if m.stats.TotalErrors > 0 {
+		b.WriteString(fmt.Sprintf("  %s %s\n", infoStyle.Render("Errors:"), errorStyle.Render(fmt.Sprintf("%d", m.stats.TotalErrors))))
+	}
 
 	if m.stats.TotalDownloaded > 0 && elapsed.Seconds() > 0 {
 		rate := float64(m.stats.TotalDownloaded) / elapsed.Seconds()
-		b.WriteString(fmt.Sprintf("  Rate:          %.1f files/sec\n", rate))
+		b.WriteString(fmt.Sprintf("  %s   %s\n", infoStyle.Render("Rate:"), statsStyle.Render(fmt.Sprintf("%.1f files/sec", rate))))
 	}
 
+	b.WriteString(fmt.Sprintf("\n  %s %s\n", infoStyle.Render("Output:"), urlStyle.Render(m.config.OutputDir)))
 	b.WriteString("\n")
 	return b.String()
 }
@@ -402,9 +405,15 @@ func Run(config *crawler.Config) error {
 	model := NewModel(config)
 	p := tea.NewProgram(model, tea.WithAltScreen())
 
-	if _, err := p.Run(); err != nil {
+	finalModel, err := p.Run()
+	if err != nil {
 		// Fall back to quiet mode if TUI fails
 		return runQuiet(config)
+	}
+
+	// Print final summary after TUI exits
+	if m, ok := finalModel.(*Model); ok {
+		fmt.Print(m.renderFinalStats())
 	}
 
 	return nil
