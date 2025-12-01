@@ -318,7 +318,13 @@ func (m *Model) View() string {
 	} else if len(m.stats.ActiveURLs) == 0 {
 		b.WriteString(m.threads[0].Spinner.View())
 		b.WriteString(" ")
-		b.WriteString(infoStyle.Render("Discovering pages..."))
+		if m.stats.TotalDownloaded > 0 && m.stats.TotalDownloaded >= m.stats.TotalDiscovered {
+			b.WriteString(infoStyle.Render("Finishing up..."))
+		} else if m.stats.TotalDiscovered == 0 {
+			b.WriteString(infoStyle.Render("Connecting..."))
+		} else {
+			b.WriteString(infoStyle.Render("Discovering pages..."))
+		}
 		b.WriteString("\n")
 	}
 
