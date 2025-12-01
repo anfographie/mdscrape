@@ -86,3 +86,7 @@ Edit `cmd/root.go`, modify flag defaults in `init()`.
 2. Add flag in `init()` function
 3. Use in `runScrape()` function
 4. Pass to crawler config
+
+## Git commits
+
+Do not include Co-Authored-By or "Generated with Claude Code" lines in commit messages.
