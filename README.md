@@ -174,6 +174,34 @@ nav, header, footer, .sidebar, .toc, .breadcrumb,
 - **Documentation migration** - Convert sites to Markdown for static site generators
 - **Archiving** - Preserve documentation snapshots
 
+## Building AI agents with scraped docs
+
+The scraped markdown files are ideal for creating specialized AI coding agents. For example, to build a "Next.js expert" agent:
+
+```bash
+# Scrape Next.js documentation
+mdscrape https://nextjs.org/docs/ -o nextjs-docs
+
+# Create a CLAUDE.md instruction file for your project
+cat > CLAUDE.md << 'EOF'
+You are an expert Next.js developer. When answering questions about Next.js,
+refer to the documentation in the `nextjs-docs/` folder for accurate,
+up-to-date information about APIs, patterns, and best practices.
+EOF
+```
+
+This gives AI assistants like Claude access to the complete, current documentation as context, enabling more accurate and framework-specific responses. The markdown format preserves code examples, API references, and structural information that helps the AI understand and apply the documentation correctly.
+
+You can combine multiple documentation sources to create specialized agents:
+
+```bash
+mdscrape https://nextjs.org/docs/ -o docs/nextjs
+mdscrape https://tailwindcss.com/docs/ -o docs/tailwind
+mdscrape https://www.prisma.io/docs/ -o docs/prisma
+```
+
+Then reference all three in your project instructions to create a full-stack expert agent.
+
 ## License
 
 MIT
