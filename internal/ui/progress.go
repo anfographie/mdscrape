@@ -208,9 +208,10 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tickMsg:
 		if m.done {
 			m.quitting = true
-			// Print final stats directly before quitting (bypasses TUI clearing)
-			fmt.Print(m.renderFinalStats())
-			return m, tea.Quit
+			return m, tea.Sequence(
+				tea.Println(m.renderFinalStats()),
+				tea.Quit,
+			)
 		}
 
 		// Update stats from crawler
@@ -244,8 +245,7 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m *Model) View() string {
 	if m.quitting {
-		// Print final view with newlines to push content up, not clear screen
-		return "\n\n"
+		return ""
 	}
 
 	var b strings.Builder
@@ -474,7 +474,7 @@ func Run(config *crawler.Config) error {
 		return runQuiet(config)
 	}
 
-	// Final stats are printed in Update() before tea.Quit
+	// Summary is printed via tea.Println before quit
 	return nil
 }
 
