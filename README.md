@@ -218,3 +218,7 @@ Folder structure mirroring the documentation site:
 Markdown output with preserved code blocks and formatting:
 
 ![Markdown output](screenshots/SCR-20251201-ibct.png)
+
+Using scraped docs with Claude Code agents:
+
+![Claude Code example](screenshots/SCR-20251201-ptfn.png)
