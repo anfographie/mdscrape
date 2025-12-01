@@ -2,25 +2,7 @@
 
 A fast, concurrent CLI tool for scraping documentation websites and converting them to clean Markdown files. Perfect for building knowledge bases for AI agents.
 
-```
-$ mdscrape https://docs.docker.com/reference/ -d 3
-
-mdscrape - Web to Markdown scraper
-
-URL: https://docs.docker.com/reference/
-Output: docs.docker.com_reference
-
-████████████████████████████████████████████████░░  96%
-
-Files: 489/510 | Size: 2.9 MB | Errors: 0 | Time: 45s
-
-Recent files:
-  ✓ cli/docker/compose/up.md
-  ✓ cli/docker/compose/down.md
-  ✓ cli/docker/buildx/build.md
-
-⠋ Scraping in progress...
-```
+![mdscrape in action](screenshots/SCR-20251201-hyus.png)
 
 ## Features
 
