@@ -221,4 +221,4 @@ Markdown output with preserved code blocks and formatting:
 
 Using scraped docs with Claude Code agents:
 
-![Claude Code example](screenshots/SCR-20251201-ptfn.png)
+![Claude Code example](screenshots/SCR-20251201-puof.png)
