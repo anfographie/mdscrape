@@ -8,10 +8,10 @@ A fast, concurrent CLI tool for scraping documentation websites and converting t
 
 - **Fast concurrent scraping** - configurable thread pool (default: 10 threads)
 - **Smart content extraction** - automatically finds main content, removes nav/footer/ads
-- **Clean Markdown output** - proper headings, code blocks, tables, and links
+- **Preserves formatting** - code blocks with syntax hints, tables, lists, inline code, links, headings
 - **Mirror folder structure** - `/docs/api/auth/` becomes `docs/api/auth.md`
 - **YAML frontmatter** - includes title and source URL for reference
-- **Beautiful progress UI** - real-time stats with Bubble Tea (auto-detects TTY)
+- **Beautiful progress UI** - real-time stats, per-thread activity display (auto-detects TTY)
 - **Flexible filtering** - limit by URL prefix, exclude patterns, set max depth
 
 ## Installation
@@ -183,3 +183,13 @@ nav, header, footer, .sidebar, .toc, .breadcrumb,
 ## License
 
 MIT
+
+## Examples
+
+Folder structure mirroring the documentation site:
+
+![Folder structure](screenshots/SCR-20251201-iaqk.png)
+
+Markdown output with preserved code blocks and formatting:
+
+![Markdown output](screenshots/SCR-20251201-ibct.png)
