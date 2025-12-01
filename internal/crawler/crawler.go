@@ -171,6 +171,13 @@ func (c *Crawler) setupCollector() {
 		if c.progress != nil {
 			c.progress(0, url, "error", 0)
 		}
+		// Send error result to channel
+		c.results <- PageResult{
+			URL:       url,
+			Error:     err,
+			Success:   false,
+			Timestamp: time.Now(),
+		}
 	})
 }
 

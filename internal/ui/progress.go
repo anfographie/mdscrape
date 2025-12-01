@@ -208,6 +208,8 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tickMsg:
 		if m.done {
 			m.quitting = true
+			// Print final stats directly before quitting (bypasses TUI clearing)
+			fmt.Print(m.renderFinalStats())
 			return m, tea.Quit
 		}
 
@@ -472,9 +474,7 @@ func Run(config *crawler.Config) error {
 		return runQuiet(config)
 	}
 
-	// Print final summary after TUI exits (use original model pointer which has the data)
-	fmt.Print(model.renderFinalStats())
-
+	// Final stats are printed in Update() before tea.Quit
 	return nil
 }
 
