@@ -17,7 +17,8 @@ builds:
       - -s -w
 
 archives:
-  - format: tar.gz
+  - formats:
+      - tar.gz
     name_template: >-
       {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
 
@@ -25,6 +26,7 @@ brews:
   - repository:
       owner: jotka
       name: homebrew-tap
+    directory: Formula
     homepage: "https://github.com/jotka/mdscrape"
     description: "Scrape documentation websites and convert to Markdown"
     license: "MIT"
